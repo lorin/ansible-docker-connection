@@ -2,12 +2,11 @@
 ---
 - name: create a new docker container
   hosts: localhost
-  vars_files:
+  vars:
     container: webcontainer
   tasks:
     - name: start a docker container with bash
-      command: docker run --name={{ container }} -d -t ubuntu bash
-      # docker: image=ubuntu name=webcontainer detach=yes tty=yes command=bash
+      docker: image=ubuntu name={{ container }} detach=yes tty=yes command=bash
     - name: add it to the inventory
       add_host: name={{ container }} ansible_python_interpreter=/usr/bin/python2.7
 
