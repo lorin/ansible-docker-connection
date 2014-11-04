@@ -11,7 +11,7 @@
       add_host: name={{ container }} ansible_python_interpreter=/usr/bin/python2.7
 
 - name: test the docker connection
-  connection: dockerlocal
+  connection: docker
   hosts: webcontainer
 
   tasks:
