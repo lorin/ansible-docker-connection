@@ -4,9 +4,10 @@ import subprocess
 from ansible import errors
 from ansible.callbacks import vvv
 
+
 class Connection(object):
     def __init__(self, runner, host, port, *args, **kwargs):
-        self.name = host
+        self.host = host
         self.runner = runner
         pass
 
@@ -33,11 +34,11 @@ class Connection(object):
         # We enter container as root so sudo stuff can be ignored
 
         if executable:
-            local_cmd = ["docker", "exec", self.name, executable, '-c', cmd]
+            local_cmd = ["docker", "exec", self.host, executable, '-c', cmd]
         else:
-            local_cmd = 'docker exec "%s" %s' % (self.name, cmd)
+            local_cmd = 'docker exec "%s" %s' % (self.host, cmd)
 
-        vvv("EXEC %s" % (local_cmd), host=self.name)
+        vvv("EXEC %s" % (local_cmd), host=self.host)
         p = subprocess.Popen(local_cmd,
                              shell=isinstance(local_cmd, basestring),
                              cwd=self.runner.basedir,
@@ -49,10 +50,10 @@ class Connection(object):
 
     def put_file(self, in_path, out_path):
         ''' transfer a file from local to container '''
-        args = ["docker", "exec", "-i", self.name, "bash", "-c",
+        args = ["docker", "exec", "-i", self.host, "bash", "-c",
                 "cat > %s" % format(out_path)]
 
-        vvv("PUT %s TO %s" % (in_path, out_path), host=self.name)
+        vvv("PUT %s TO %s" % (in_path, out_path), host=self.host)
 
         if not os.path.exists(in_path):
             raise errors.AnsibleFileNotFound(
@@ -64,7 +65,7 @@ class Connection(object):
 
     def fetch_file(self, in_path, out_path):
         ''' fetch a file from container to local '''
-        args = ["docker", "cp", "%s:%s" % (self.name, in_path),
+        args = ["docker", "cp", "%s:%s" % (self.host, in_path),
                 out_path]
 
         vvv("FETCH %s TO %s" % (in_path, out_path), host=self.chroot)
