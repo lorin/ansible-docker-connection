@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: test the docker connection
+  connection: docker
+  hosts: mytest
+  gather_facts: False
+
+  tasks:
+    - name: try to execute a command
+      command: echo hello

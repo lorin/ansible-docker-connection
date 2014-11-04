@@ -4,9 +4,10 @@ import subprocess
 
 name = "mytest"
 dest = "/tmp/file.txt"
-srcdata = "Hello, my name is computer"
+srcdata = "Hello, my name is computer\n"
 
 args = ["docker", "exec", "-i", name, "bash", "-c", "cat > {}".format(dest)]
 
 p = subprocess.Popen(args, stdin=subprocess.PIPE)
-p.communicate()
+p.stdin.write(srcdata)
+p.stdin.close()
