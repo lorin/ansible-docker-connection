@@ -1,3 +1,5 @@
+# Author: Lorin Hochstein
+# Based on the chroot connection plugin by Maykel Moya
 import os
 import subprocess
 
