@@ -424,7 +424,12 @@ class DockerManager:
         # connect to docker server
         docker_url = urlparse(module.params.get('docker_url'))
         docker_api_version = module.params.get('docker_api_version')
-        self.client = docker.Client(base_url=docker_url.geturl(), version=docker_api_version)
+
+        # If DOCKER_HOST is set, use environment variables to configure client
+        if 'DOCKER_HOST' in os.environ:
+            self.client = docker.Client(**docker.utils.kwargs_from_env(assert_hostname=False))
+        else:
+            self.client = docker.Client(base_url=docker_url.geturl(), version=docker_api_version)
 
 
     def get_links(self, links):
