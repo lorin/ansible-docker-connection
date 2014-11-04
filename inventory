@@ -1,2 +1,3 @@
 local ansible_connection=local
+ipython ansible_python_interpreter=/usr/bin/python2.7
 mytest ansible_python_interpreter=/usr/bin/python2.7

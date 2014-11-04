@@ -1,0 +1,37 @@
+#!/usr/bin/env ansible-playbook
+---
+- name: create an ipython container
+  hosts: ipython
+  connection: docker
+
+  tasks:
+    - name: start up a docker container by running bash
+      local_action: docker image=ubuntu name={{ inventory_hostname }} detach=yes tty=yes command=bash
+
+    - name: update apt repo (raw)
+      raw: apt-get update
+
+    - name: install python 2.7 (raw)
+      raw: apt-get install -y python2.7
+
+    - name: install packages
+      apt: name={{ item }}
+      with_items:
+        - build-essential
+        - python-pip
+
+    - name: install packages with pip
+      pip: name={{ item }}
+      with_items:
+        - numpy
+        - scipy
+        - cython
+        - pandas
+        - matplotlib
+        - seaborn
+        - patsy
+        - statsmodels
+        - ggplot
+        - ipython[all]
+
+
