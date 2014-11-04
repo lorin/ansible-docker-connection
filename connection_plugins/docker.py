@@ -9,6 +9,7 @@ class Connection(object):
     def __init__(self, runner, host, port, *args, **kwargs):
         self.host = host
         self.runner = runner
+        self.has_pipelining = False
         pass
 
     def connect(self, port=None):
@@ -65,13 +66,20 @@ class Connection(object):
 
     def fetch_file(self, in_path, out_path):
         ''' fetch a file from container to local '''
-        args = ["docker", "cp", "%s:%s" % (self.host, in_path),
-                out_path]
+        # out_path is the final file path, but docker takes a directory, not a
+        # file path
+        out_dir = os.path.dirname(out_path)
+        args = ["docker", "cp", "%s:%s" % (self.host, in_path), out_dir]
 
-        vvv("FETCH %s TO %s" % (in_path, out_path), host=self.chroot)
+        vvv("FETCH %s TO %s" % (in_path, out_path), host=self.host)
         p = subprocess.Popen(args, stdin=subprocess.PIPE,
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.communicate()
+
+        # Rename if needed
+        actual_out_path = os.path.join(out_dir, os.path.basename(in_path))
+        if actual_out_path != out_path:
+            os.rename(actual_out_path, out_path)
 
     def close(self):
         ''' terminate the connection. Nothing to do '''

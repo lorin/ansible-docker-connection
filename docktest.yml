@@ -6,5 +6,7 @@
   gather_facts: False
 
   tasks:
-    - name: try to execute a command
-      command: echo hello
+    - name: install nginx
+      apt: name=nginx
+    - name: fetch the timezone file
+      fetch: src=/etc/timezone dest=.
