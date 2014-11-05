@@ -2,6 +2,7 @@
 # Based on the chroot connection plugin by Maykel Moya
 import os
 import subprocess
+import time
 
 from ansible import errors
 from ansible.callbacks import vvv
@@ -65,6 +66,11 @@ class Connection(object):
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.stdin.write(open(in_path).read())
         p.stdin.close()
+
+        # HACK because of https://github.com/boot2docker/boot2docker/issues/583
+        # This is only a problem with boot2docker
+        time.sleep(1)
+        p.terminate()
 
     def fetch_file(self, in_path, out_path):
         ''' fetch a file from container to local '''
