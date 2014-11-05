@@ -1,5 +1,7 @@
 FROM lorin/iptyhon-base
 
+MAINTAINER Lorin Hochstein <lorin.hochstein@sendgrid.com>
+
 VOLUME /notebooks
 WORKDIR /notebooks
 
