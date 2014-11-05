@@ -21,9 +21,9 @@
     - ipython
 
   post_tasks:
-    - name: capture the container to an image
+    - name: capture the container to a base image
       local_action: command docker commit {{ inventory_hostname }} {{ base_image }}
     - name: stop the current running container
       local_action: command docker kill {{ inventory_hostname }}
-    - name: create a new image
-      docker_image: path=./files name={{ image }} state=build
+    - name: create the final image
+      local_action: docker_image path=./files name={{ image }} state=build
