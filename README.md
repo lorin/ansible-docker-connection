@@ -26,7 +26,15 @@ In your plays, add `connection: docker`. For example:
 
 ## Start the IPython notebook
 
+This will start the notebook and mount /notebooks to your current directory on
+the host.
+
 ```
-docker run -p 8888:8888 lorin/ipython:v2 ipython notebook --no-browser --port 8888 '--ip=*'
+docker run -d -p 8888:8888 -v `pwd`:/notebooks -w /notebooks lorin/ipython:v2 /notebook.sh
 ```
+
+## Access the notebook
+
+Browse to <http://192.168.59.103:8888>
+
 
