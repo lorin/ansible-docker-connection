@@ -27,9 +27,6 @@
     - statsmodels
     - ggplot
     - ipython[all]
-    - pyzmq
-    - jinja2
-    - tornado
     - psycopg2
 
 - name: copy the startup script in
