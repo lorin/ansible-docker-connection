@@ -22,7 +22,7 @@
         - liblapack-dev
         - libopenblas-dev
         - libpng12-dev
-        - libfreetype6
+        - libfreetype6-dev
         - pkg-config
         - python-pip
         - python2.7-dev
