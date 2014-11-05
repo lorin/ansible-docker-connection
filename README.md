@@ -68,7 +68,8 @@ Q: Does it work with boot2docker?
 
 A: Sure does!
 
-Q: What's with the `pre_image` and `final_image` and the playbook?
+Q: What's with the `pre_image` and `final_image` in the
+[ipython.yml](ipython.yml) playbook?
 
 A: The playbook creates the pre-image by starting a container from a base
 ubuntu image, configuring it with ansible, and then committing it. The playbook
