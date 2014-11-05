@@ -39,5 +39,6 @@
         - statsmodels
         - ggplot
         - ipython[all]
+        - pyzmq
 
 
