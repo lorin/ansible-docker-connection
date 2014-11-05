@@ -42,5 +42,11 @@ If you're running docker locally on Linux, browse to <http:///localhost:8888>.
 If you're using boot2docker, browse to <http://192.168.59.103:8888> (or whatever
 IP your `DOCKER_HOST` points to).
 
+## FAQ
 
+Q: Why do you have custom `docker` and `docker_image` modules.
+
+A: The upstream modules don't have support for boot2docker yet. I've submitted a
+[pull request](https://github.com/ansible/ansible-modules-core/pull/272) to get
+these added.
 
