@@ -24,7 +24,8 @@ In your plays, add `connection: docker`. For example:
     - ...
 ```
 
-Check out the [ipython.yml](ipython.yml) playbook for an example.
+Check out the [ipython.yml](ipython.yml) playbook for an example that builds a
+container that runs an IPython notebook.
 
 ## Start the IPython notebook
 
