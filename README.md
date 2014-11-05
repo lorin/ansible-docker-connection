@@ -33,8 +33,18 @@ In your plays, add `connection: docker`. For example:
     - ...
 ```
 
+## Example
+
 Check out the [ipython.yml](ipython.yml) playbook for an example that builds a
 container that runs an IPython notebook.
+
+To build the example image, just do:
+
+```
+ansible-playbook ipython.yml
+```
+
+It will build a docker image called `lorin/ipython`
 
 ## Start the IPython notebook
 
