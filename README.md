@@ -24,17 +24,23 @@ In your plays, add `connection: docker`. For example:
     - ...
 ```
 
+Check out the [ipython.yml](ipython.yml) playbook for an example.
+
 ## Start the IPython notebook
 
 This will start the notebook and mount /notebooks to your current directory on
 the host.
 
 ```
-docker run -d -p 8888:8888 -v `pwd`:/notebooks -w /notebooks lorin/ipython:v2 /notebook.sh
+docker run -d -p 8888:8888 -v `pwd`:/notebooks lorin/ipython
 ```
 
 ## Access the notebook
 
-Browse to <http://192.168.59.103:8888>
+If you're running docker locally on Linux, browse to <http:///localhost:8888>.
+
+If you're using boot2docker, browse to <http://192.168.59.103:8888> (or whatever
+IP your `DOCKER_HOST` points to).
+
 
 
