@@ -1,1 +1,3 @@
 .vagrant
+.ipynb_checkpoints
+*.ipynb
