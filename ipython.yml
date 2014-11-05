@@ -17,9 +17,12 @@
     - name: install packages
       apt: name={{ item }}
       with_items:
+        - gfortran
+        - liblapack-dev
+        - libopenblas-dev
+        - python2.7-dev
         - build-essential
         - python-pip
-
     - name: install packages with pip
       pip: name={{ item }}
       with_items:
