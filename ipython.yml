@@ -4,12 +4,13 @@
   hosts: ipython
   connection: docker
   vars:
-    base_image: lorin/ipython-base
-    image: lorin/ipython
+    base_image: ubuntu
+    pre_image: lorin/ipython-base
+    final_image: lorin/ipython
 
   pre_tasks:
     - name: start up a docker container by running bash
-      local_action: docker image=ubuntu name={{ inventory_hostname }} detach=yes tty=yes command=bash
+      local_action: docker image={{ base_image }} name={{ inventory_hostname }} detach=yes tty=yes command=bash
 
     - name: update apt repo (raw)
       raw: apt-get update
@@ -22,8 +23,8 @@
 
   post_tasks:
     - name: capture the container to a base image
-      local_action: command docker commit {{ inventory_hostname }} {{ base_image }}
+      local_action: command docker commit {{ inventory_hostname }} {{ pre_image }}
     - name: stop the current running container
       local_action: command docker kill {{ inventory_hostname }}
     - name: create the final image
-      local_action: docker_image path=./files name={{ image }} state=build
+      local_action: docker_image path=./files name={{ final_image }} state=build
