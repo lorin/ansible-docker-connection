@@ -1,4 +1,4 @@
-FROM lorin/iptyhon-base
+FROM lorin/ipython-base
 
 MAINTAINER Lorin Hochstein <lorin.hochstein@sendgrid.com>
 
