@@ -10,6 +10,7 @@
     - libpng12-dev
     - libpq-dev
     - libzmq3-dev
+    - pandoc
     - pkg-config
     - python-pip
     - python2.7-dev
