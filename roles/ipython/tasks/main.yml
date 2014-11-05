@@ -28,6 +28,3 @@
     - ggplot
     - ipython[all]
     - psycopg2
-
-- name: copy the startup script in
-  copy: src=notebook.sh dest=/notebook.sh mode=0755

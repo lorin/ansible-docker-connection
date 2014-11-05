@@ -4,7 +4,8 @@
   hosts: ipython
   connection: docker
   vars:
-    image: lorin/ipython:v1
+    base_image: lorin/ipython-base
+    image: lorin/ipython
 
   pre_tasks:
     - name: start up a docker container by running bash
@@ -21,6 +22,8 @@
 
   post_tasks:
     - name: capture the container to an image
-      local_action: command docker commit {{ inventory_hostname }} {{ image }}
+      local_action: command docker commit {{ inventory_hostname }} {{ base_image }}
     - name: stop the current running container
       local_action: command docker kill {{ inventory_hostname }}
+    - name: create a new image
+      docker_image: path=./files name={{ image }} state=build
