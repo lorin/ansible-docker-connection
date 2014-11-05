@@ -45,6 +45,15 @@ IP your `DOCKER_HOST` points to).
 
 ## FAQ
 
+Q: What's with the `pre_image` and `final_image` and the playbook.
+
+A: The playbook creates the pre-image by starting a container from a base
+ubuntu image, configuring it with ansible, and then committing it. The playbook
+creates the final image from the pre-image using a Dockerfile to set things like
+the working directory, exposed ports, and command to run.
+
+If you know how to do this one step, please let me know.
+
 Q: Why do you have custom `docker` and `docker_image` modules.
 
 A: The upstream modules don't have support for boot2docker yet. I've submitted a
