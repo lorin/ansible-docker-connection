@@ -11,6 +11,15 @@ This is a work-in-progress.
 1. Create a `connection_plugins` directory next to your playbooks.
 2. Copy the `connection_plugins/docker.py` file to the directory.
 
+You may also need to modify the remote temporary directory (I had to do this
+with the `ubuntu` base image). Add the following to your ansible.cfg:
+
+```
+[defaults]
+remote_tmp = /tmp
+```
+
+
 ## How to use it
 
 In your plays, add `connection: docker`. For example:
