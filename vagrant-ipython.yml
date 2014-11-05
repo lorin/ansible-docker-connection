@@ -1,0 +1,9 @@
+---
+- name: configure vagrant for ipython
+  hosts: default
+  sudo: True
+  pre_tasks:
+    - apt: update_cache=yes cache_valid_time=3600
+  roles:
+    - ipython
+
