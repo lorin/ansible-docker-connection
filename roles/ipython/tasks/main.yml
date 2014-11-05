@@ -1,0 +1,31 @@
+---
+- name: install packages
+  apt: name={{ item }}
+  with_items:
+    - build-essential
+    - gfortran
+    - liblapack-dev
+    - libopenblas-dev
+    - libpng12-dev
+    - libfreetype6-dev
+    - libzmq3-dev
+    - pkg-config
+    - python-pip
+    - python2.7-dev
+- name: install packages with pip
+
+  pip: name={{ item }}
+  with_items:
+    - numpy
+    - scipy
+    - cython
+    - pandas
+    - matplotlib
+    - seaborn
+    - patsy
+    - statsmodels
+    - ggplot
+    - ipython[all]
+    - pyzmq
+    - jinja2
+    - tornado
