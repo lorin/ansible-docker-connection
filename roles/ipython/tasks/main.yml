@@ -12,8 +12,8 @@
     - pkg-config
     - python-pip
     - python2.7-dev
-- name: install packages with pip
 
+- name: install packages with pip
   pip: name={{ item }}
   with_items:
     - numpy
@@ -29,3 +29,6 @@
     - pyzmq
     - jinja2
     - tornado
+
+- name: copy the startup script in
+  copy: src=notebook.sh dest=/notebook.sh mode=0755
