@@ -37,7 +37,7 @@ docker run -d -p 8888:8888 -v `pwd`:/notebooks lorin/ipython
 
 ## Access the notebook
 
-If you're running docker locally on Linux, browse to <http:///localhost:8888>.
+If you're running docker locally on Linux, browse to <http://localhost:8888>.
 
 If you're using boot2docker, browse to <http://192.168.59.103:8888> (or whatever
 IP your `DOCKER_HOST` points to).
