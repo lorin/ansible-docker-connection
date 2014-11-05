@@ -4,10 +4,11 @@
   with_items:
     - build-essential
     - gfortran
+    - libfreetype6-dev
     - liblapack-dev
     - libopenblas-dev
     - libpng12-dev
-    - libfreetype6-dev
+    - libpq-dev
     - libzmq3-dev
     - pkg-config
     - python-pip
@@ -29,6 +30,7 @@
     - pyzmq
     - jinja2
     - tornado
+    - psycopg2
 
 - name: copy the startup script in
   copy: src=notebook.sh dest=/notebook.sh mode=0755
