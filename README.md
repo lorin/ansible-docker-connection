@@ -23,3 +23,10 @@ In your plays, add `connection: docker`. For example:
   tasks:
     - ...
 ```
+
+## Start the IPython notebook
+
+```
+docker run -p 8888:8888 lorin/ipython:v2 ipython notebook --no-browser --port 8888 '--ip=*'
+```
+

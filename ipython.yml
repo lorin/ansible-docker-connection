@@ -4,7 +4,7 @@
   hosts: ipython
   connection: docker
 
-  tasks:
+  pre_tasks:
     - name: start up a docker container by running bash
       local_action: docker image=ubuntu name={{ inventory_hostname }} detach=yes tty=yes command=bash
 
@@ -14,31 +14,11 @@
     - name: install python 2.7 (raw)
       raw: apt-get install -y python2.7
 
-    - name: install packages
-      apt: name={{ item }}
-      with_items:
-        - build-essential
-        - gfortran
-        - liblapack-dev
-        - libopenblas-dev
-        - libpng12-dev
-        - libfreetype6-dev
-        - pkg-config
-        - python-pip
-        - python2.7-dev
-    - name: install packages with pip
-      pip: name={{ item }}
-      with_items:
-        - numpy
-        - scipy
-        - cython
-        - pandas
-        - matplotlib
-        - seaborn
-        - patsy
-        - statsmodels
-        - ggplot
-        - ipython[all]
-        - pyzmq
+  roles:
+    - ipython
 
-
+  post_tasks:
+    - name: capture the container to an image
+      local_action: command docker commit {{ inventory_hostname }} lorin/ipython:v2
+    - name: stop the current running container
+      local_action: command docker kill {{ inventory_hostname }}
