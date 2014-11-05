@@ -78,7 +78,7 @@ the working directory, exposed ports, and command to run.
 
 If you know how to do this one step, please let me know.
 
-Q: Why do you have custom `docker` and `docker_image` modules.
+Q: Why does this repo contain custom [docker](library/docker) and [docker_image](library/docker_image) modules?
 
 A: The upstream modules don't have support for boot2docker yet. I've submitted a
 [pull request](https://github.com/ansible/ansible-modules-core/pull/272) to get
