@@ -3,6 +3,8 @@
 - name: create an ipython container
   hosts: ipython
   connection: docker
+  vars:
+    image: lorin/ipython:v1
 
   pre_tasks:
     - name: start up a docker container by running bash
@@ -19,6 +21,6 @@
 
   post_tasks:
     - name: capture the container to an image
-      local_action: command docker commit {{ inventory_hostname }} lorin/ipython:v2
+      local_action: command docker commit {{ inventory_hostname }} {{ image }}
     - name: stop the current running container
       local_action: command docker kill {{ inventory_hostname }}
