@@ -40,8 +40,8 @@ docker run -d -p 8888:8888 -v `pwd`:/notebooks lorin/ipython
 
 If you're running docker locally on Linux, browse to <http://localhost:8888>.
 
-If you're using boot2docker, browse to <http://192.168.59.103:8888> (or whatever
-IP your `DOCKER_HOST` points to).
+If you're using boot2docker, browse to the IP address associated with the
+`DOCKER_HOST` environment variable, e.g.: <http://192.168.59.104:8888>
 
 ## FAQ
 
