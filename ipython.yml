@@ -21,6 +21,8 @@
         - gfortran
         - liblapack-dev
         - libopenblas-dev
+        - libpng12-dev
+        - libfreetype6
         - pkg-config
         - python-pip
         - python2.7-dev
