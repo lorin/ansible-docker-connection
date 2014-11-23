@@ -7,13 +7,12 @@ from ansible import errors
 from ansible.callbacks import vvv
 
 
-class DockerExecConnection(object):
+class Connection(object):
     def __init__(self, runner, host, port, *args, **kwargs):
         self.host = host
         self.runner = runner
         self.has_pipelining = False
         self.docker_cmd = "docker"
-        pass
 
     def connect(self, port=None):
         """ Connect to the container. Nothing to do """
@@ -87,5 +86,3 @@ class DockerExecConnection(object):
     def close(self):
         ''' terminate the connection. Nothing to do '''
         pass
-
-Connection = DockerExecConnection
