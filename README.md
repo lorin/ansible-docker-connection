@@ -6,6 +6,10 @@ into the container.
 
 This is a work-in-progress.
 
+Requires Docker 1.3.1. On Linux, you could probably get away with 1.3.0, but
+On OS X, you'll need Docker 1.3.1 and boot2docker 1.3.1.
+
+
 ## Known limitations
 
 * can't explicitly configure docker connection parameters
