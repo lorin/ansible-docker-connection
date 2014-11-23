@@ -94,7 +94,7 @@ to the inventory, like this:
    - ...
 ```
 
-## Example
+## Example: ipython notebook
 
 Check out the [ipython.yml](ipython.yml) playbook for an example that builds a
 container that runs an IPython notebook.
@@ -107,7 +107,7 @@ ansible-playbook ipython.yml
 
 It will build a docker image called `lorin/ipython`
 
-## Start the IPython notebook
+### Start the IPython notebook
 
 This will start the notebook and mount /notebooks to your current directory on
 the host.
@@ -116,7 +116,7 @@ the host.
 docker run -d -p 8888:8888 -v `pwd`:/notebooks lorin/ipython
 ```
 
-## Access the notebook
+### Access the notebook
 
 If you're running docker locally on Linux, browse to <http://localhost:8888>.
 
@@ -127,7 +127,7 @@ If you're using boot2docker, browse to the IP address associated with the
 
 Q: Does it work with boot2docker?
 
-A: Sure does!
+A: It does, but you need to disable TLS. See above.
 
 Q: What's with the `pre_image` and `final_image` in the
 [ipython.yml](ipython.yml) playbook?
