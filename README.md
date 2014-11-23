@@ -6,10 +6,19 @@ into the container.
 
 This is a work-in-progress.
 
+## Known limitations
+
+* can't explicitly configure docker connection parameters
+* when using boot2docker, TLS must be disabled (see *boot2docker issues*)
+* sudo isn't supported
+* su isn't supported
+
 ## How to install
 
 1. Create a `connection_plugins` directory next to your playbooks.
 2. Copy the `connection_plugins/docker.py` file to the directory.
+
+### ansible.cfg (remote temp)
 
 You may also need to modify the remote temporary directory (I had to do this
 with the `ubuntu` base image). Add the following to your ansible.cfg:
