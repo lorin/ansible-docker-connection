@@ -1,7 +1,10 @@
+# Connection plugin for configuring docker containers
 # Author: Lorin Hochstein
+#
 # Based on the chroot connection plugin by Maykel Moya
 import os
 import subprocess
+import time
 
 from ansible import errors
 from ansible.callbacks import vvv
@@ -22,10 +25,9 @@ class Connection(object):
                      executable='/bin/sh', in_data=None, su=None,
                      su_user=None):
 
-        ''' run a command on the local host '''
+        """ Run a command on the local host """
 
-        # su requires to be run from a terminal, and therefore isn't
-        # supported here (yet?)
+        # Don't currently support su
         if su or su_user:
             raise errors.AnsibleError("Internal Error: this module does not "
                                       "support running commands via su")
@@ -34,7 +36,9 @@ class Connection(object):
             raise errors.AnsibleError("Internal Error: this module does not "
                                       "support optimized module pipelining")
 
-        # We enter container as root so sudo stuff can be ignored
+        if sudoable and sudo_user:
+            raise errors.AnsibleError("Internal Error: this module does not "
+                                      "support running commands via sudo")
 
         if executable:
             local_cmd = [self.docker_cmd, "exec", self.host, executable,
@@ -52,8 +56,10 @@ class Connection(object):
         stdout, stderr = p.communicate()
         return (p.returncode, '', stdout, stderr)
 
+    # Docker doesn't have native support for copying files into running
+    # containers, so we use docker exec to implement this
     def put_file(self, in_path, out_path):
-        ''' transfer a file from local to container '''
+        """ Transfer a file from local to container """
         args = [self.docker_cmd, "exec", "-i", self.host, "bash", "-c",
                 "cat > %s" % format(out_path)]
 
@@ -66,8 +72,12 @@ class Connection(object):
                              stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.communicate()
 
+        # HACK: Due to a race condition, this sometimes returns before
+        # the file has been written to disk, so we sleep for one second
+        time.sleep(1)
+
     def fetch_file(self, in_path, out_path):
-        ''' fetch a file from container to local '''
+        """ Fetch a file from container to local. """
         # out_path is the final file path, but docker takes a directory, not a
         # file path
         out_dir = os.path.dirname(out_path)
@@ -84,5 +94,5 @@ class Connection(object):
             os.rename(actual_out_path, out_path)
 
     def close(self):
-        ''' terminate the connection. Nothing to do '''
+        """ Terminate the connection. Nothing to do for Docker"""
         pass
