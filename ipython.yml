@@ -1,22 +1,30 @@
 #!/usr/bin/env ansible-playbook
 ---
-- name: create an ipython container
+- name: start up a docker container
+  hosts: localhost
+  vars:
+    base_image: ubuntu
+    docker_hostname: ipython
+
+  tasks:
+    - name: start up a docker container by running bash
+      local_action: docker image={{ base_image }} name={{ docker_hostname }} detach=yes tty=yes command=bash
+    - name: add the host
+      add_host: name={{ docker_hostname }}
+
+- name: configure the ipython container
   hosts: ipython
   connection: docker
   vars:
-    base_image: ubuntu
     pre_image: lorin/ipython-base
     final_image: lorin/ipython
 
   pre_tasks:
-    - name: start up a docker container by running bash
-      local_action: docker image={{ base_image }} name={{ inventory_hostname }} detach=yes tty=yes command=bash
-
     - name: update apt repo (raw)
       raw: apt-get update
 
-    - name: install python 2.7 (raw)
-      raw: apt-get install -y python2.7
+    - name: install python (raw)
+      raw: apt-get install -y python
 
   roles:
     - ipython
