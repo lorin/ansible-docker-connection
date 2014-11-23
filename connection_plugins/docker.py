@@ -8,11 +8,12 @@ from ansible import errors
 from ansible.callbacks import vvv
 
 
-class Connection(object):
+class DockerExecConnection(object):
     def __init__(self, runner, host, port, *args, **kwargs):
         self.host = host
         self.runner = runner
         self.has_pipelining = False
+        self.docker_cmd = "docker"
         pass
 
     def connect(self, port=None):
@@ -38,9 +39,10 @@ class Connection(object):
         # We enter container as root so sudo stuff can be ignored
 
         if executable:
-            local_cmd = ["docker", "exec", self.host, executable, '-c', cmd]
+            local_cmd = [self.docker_cmd, "exec", self.host, executable,
+                         '-c', cmd]
         else:
-            local_cmd = 'docker exec "%s" %s' % (self.host, cmd)
+            local_cmd = '%s exec "%s" %s' % (self.docker_cmd, self.host, cmd)
 
         vvv("EXEC %s" % (local_cmd), host=self.host)
         p = subprocess.Popen(local_cmd,
@@ -54,7 +56,7 @@ class Connection(object):
 
     def put_file(self, in_path, out_path):
         ''' transfer a file from local to container '''
-        args = ["docker", "exec", "-i", self.host, "bash", "-c",
+        args = [self.docker_cmd, "exec", "-i", self.host, "bash", "-c",
                 "cat > %s" % format(out_path)]
 
         vvv("PUT %s TO %s" % (in_path, out_path), host=self.host)
@@ -77,7 +79,7 @@ class Connection(object):
         # out_path is the final file path, but docker takes a directory, not a
         # file path
         out_dir = os.path.dirname(out_path)
-        args = ["docker", "cp", "%s:%s" % (self.host, in_path), out_dir]
+        args = [self.docker_cmd, "cp", "%s:%s" % (self.host, in_path), out_dir]
 
         vvv("FETCH %s TO %s" % (in_path, out_path), host=self.host)
         p = subprocess.Popen(args, stdin=subprocess.PIPE,
@@ -92,3 +94,5 @@ class Connection(object):
     def close(self):
         ''' terminate the connection. Nothing to do '''
         pass
+
+Connection = DockerExecConnection
