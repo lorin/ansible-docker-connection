@@ -20,6 +20,33 @@ remote_tmp = /tmp
 ```
 
 
+### boot2docker issues
+
+Because of a [docker
+issue](https://github.com/docker/docker/issues/864://github.com/docker/docker/issues/8642),
+if you are using boot2docker, you must disable TLS or the connectin plugin will
+hang.
+
+To disable TLS in boot2docker:
+
+```
+boot2docker ssh
+sudo -i
+/etc/init.d/docker stop
+echo DOCKER_TLS="no" > /var/lib/boot2docker/profile
+/etc/init.d/docker start
+```
+
+Your `DOCKER_HOST` should now point to port 2376 (the IP may not match the one
+below), and the `DOCKER_TLS_VERIFY` and `DOCKER_CERT_PATH` environment variables
+should not be deifned.
+
+```
+export DOCKER_HOST=tcp://192.168.59.103:2375
+unset DOCKER_TLS_VERIFY
+unset DOCKER_CERT_PATH
+```
+
 ## How to use it
 
 In your plays, add `connection: docker`. For example:
