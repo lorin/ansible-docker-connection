@@ -60,6 +60,31 @@ In your plays, add `connection: docker`. For example:
     - ...
 ```
 
+You need a running container first, and you'll need to add the hostname to
+Ansible's inventory. One way to do it is to write an initial play that runs a
+container using the `docker` module and then uses the `add_host` module to add
+to the inventory, like this:
+
+```
+- name: start up a docker container
+  hosts: localhost
+  vars:
+    base_image: ubuntu
+    docker_hostname: webcontainer
+
+  tasks:
+    - name: start up a docker container by running bash
+      local_action: docker image={{ base_image }} name={{ docker_hostname }} detach=yes tty=yes command=bash
+    - name: add the host
+      add_host: name={{ docker_hostname }}
+
+- name: configure the web container
+  hosts: webcontainer
+  connection: docker
+  tasks:
+   - ...
+```
+
 ## Example
 
 Check out the [ipython.yml](ipython.yml) playbook for an example that builds a
