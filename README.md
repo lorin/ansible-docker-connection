@@ -1,4 +1,11 @@
-# Docker connection plugin for Ansible
+# Docker connection plugin for Ansible (obsolete)
+
+## Note: Ansible now ships with a Docker connection plugin
+
+There is now an [official Docker connection plugin](https://github.com/ansible/ansible/pull/11650). Please use that code instead of the one in this repo, which is obsolete.
+
+
+
 
 This repo contains a connection plugin for Ansible that lets you configure
 Docker containers without needing to install an SSH server or Ansible itself
