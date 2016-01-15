@@ -43,7 +43,7 @@ remote_tmp = /tmp
 ### boot2docker issues
 
 Because of a [docker
-issue](https://github.com/docker/docker/issues/864://github.com/docker/docker/issues/8642),
+issue](https://github.com/docker/docker/issues/8642),
 if you are using boot2docker, you must disable TLS or the connection plugin will
 hang.
 
